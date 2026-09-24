@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revista Vitrine Senac — Inovação, Gestão & Prática Profissional</title>
+  <meta name="description" content="Periódico acadêmico e técnico-científico do Senac Mato Grosso — Unidade Sinop. Focado em inovação, gestão e práticas do mundo do trabalho." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            senac: {
+              navy: '#1F4E79',
+              dark: '#153655',
+              orange: '#F28C28',
+              orangeHover: '#d9771a',
+              amber: '#E07B1E',
+              bgLight: '#F8F9FA'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background-color: #F8F9FA;
+      color: #1e293b;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .card-shadow {
+      box-shadow: 0 4px 20px -2px rgba(31, 78, 121, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+    .card-hover {
+      transition: all 0.25s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -4px rgba(31, 78, 121, 0.14);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 antialiased selection:bg-orange-500 selection:text-white">
+
+  <!-- TOP BAR INSTITUCIONAL -->
+  <aside aria-label="Avisos institucionais" class="bg-[#153655] text-white text-xs py-2 px-4 border-b border-white/10 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-white/10 text-white font-medium text-[11px]">
+          <i data-lucide="building-2" class="w-3 h-3 text-[#F28C28]"></i>
+          <span>Senac Mato Grosso · Unidade Sinop</span>
+        </span>
+        <span class="hidden md:inline text-slate-300">·</span>
+        <span class="hidden md:inline text-slate-300 font-mono text-[11px]">ISSN 2965-8845</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="switchTab('submissoes')" class="inline-flex items-center gap-1.5 text-[#F28C28] hover:text-white font-semibold transition-colors">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>Chamada Aberta 2026/2</span>
+        </button>
+        <span class="text-white/20">|</span>
+        <button onclick="switchTab('area-restrita')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-[#F28C28] text-[11px] font-bold border border-white/15 transition-colors cursor-pointer">
+          <i data-lucide="lock" class="w-3 h-3"></i>
+          <span>Acessar Área Restrita</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CABEÇALHO PRINCIPAL COM LOGO E NAVEGAÇÃO -->
+  <header class="bg-white border-b border-slate-200/80 sticky top-9 z-40 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logotipo Oficial Senac / Revista Vitrine -->
+        <div onclick="switchTab('inicio')" class="flex items-center gap-3.5 cursor-pointer select-none">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1F4E79] to-[#153655] flex items-center justify-center text-white shadow-md relative overflow-hidden group">
+            <i data-lucide="book-open" class="w-6 h-6 text-[#F28C28]"></i>
+            <div class="absolute -right-2 -bottom-2 w-6 h-6 bg-[#F28C28] rounded-full opacity-60"></div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl sm:text-2xl font-black text-[#1F4E79] tracking-tight font-serif">VITRINE</span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-[#F28C28] text-white tracking-widest">SENAC</span>
+            </div>
+            <p class="text-[11px] sm:text-xs text-slate-500 font-medium">Inovação, Gestão & Prática Profissional</p>
+          </div>
+        </div>
+
+        <!-- Menu de Navegação Desktop -->
+        <nav class="hidden lg:flex items-center gap-1 font-semibold text-xs text-slate-700">
+          <button onclick="switchTab('inicio')" id="nav-inicio" class="nav-btn px-3 py-2 rounded-xl transition-all text-[#1F4E79] bg-slate-100">Início</button>
+          <button onclick="switchTab('sobre')" id="nav-sobre" class="nav-btn px-3 py-2 rounded-xl transition-all hover:bg-slate-100 hover:text-[#1F4E79]">Sobre a Revista</button>
+          <button onclick="switchTab('edicoes')" id="nav-edicoes" class="nav-btn px-3 py-2 rounded-xl transition-all hover:bg-slate-100 hover:text-[#1F4E79]">Edições & Artigos</button>
+          <button onclick="switchTab('submissoes')" id="nav-submissoes" class="nav-btn px-3 py-2 rounded-xl transition-all hover:bg-slate-100 hover:text-[#1F4E79]">Submissões</button>
+          <button onclick="switchTab('equipe')" id="nav-equipe" class="nav-btn px-3 py-2 rounded-xl transition-all hover:bg-slate-100 hover:text-[#1F4E79]">Equipe Editorial</button>
+          <button onclick="switchTab('contato')" id="nav-contato" class="nav-btn px-3 py-2 rounded-xl transition-all hover:bg-slate-100 hover:text-[#1F4E79]">Contato</button>
+        </nav>
+
+        <!-- Ação Rápida de Submissão -->
+        <div class="flex items-center gap-3">
+          <button onclick="switchTab('submissoes')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#F28C28] hover:bg-[#d9771a] text-white font-bold text-xs shadow-md shadow-[#F28C28]/25 transition-all">
+            <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Submeter Artigo</span>
+            <span class="sm:hidden">Submeter</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegação Mobile (Scroll Horizontal) -->
+    <div class="lg:hidden border-t border-slate-100 bg-slate-50 px-4 py-2 flex items-center gap-2 overflow-x-auto text-xs font-semibold whitespace-nowrap">
+      <button onclick="switchTab('inicio')" class="px-3 py-1.5 rounded-lg text-[#1F4E79] bg-white border border-slate-200">Início</button>
+      <button onclick="switchTab('sobre')" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">Sobre</button>
+      <button onclick="switchTab('edicoes')" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">Edições</button>
+      <button onclick="switchTab('submissoes')" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">Submissões</button>
+      <button onclick="switchTab('equipe')" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">Equipe</button>
+      <button onclick="switchTab('contato')" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">Contato</button>
+      <button onclick="switchTab('area-restrita')" class="px-3 py-1.5 rounded-lg text-[#F28C28] font-bold hover:bg-white">Área Restrita</button>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL (SPA TABS) -->
+  <main class="flex-1">
+
+    <!-- ABA 1: INÍCIO -->
+    <div id="tab-inicio" class="tab-content active max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+      <!-- HERO BANNER -->
+      <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1F4E79] via-[#1A4266] to-[#153655] text-white p-8 md:p-14 card-shadow">
+        <div class="relative z-10 max-w-3xl space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-xs text-[#F28C28] text-xs font-bold uppercase tracking-wider border border-white/15">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>Chamada Aberta de Trabalhos · Edição 2026/2</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight font-serif leading-tight">
+            A ponte entre a pesquisa aplicada e o mercado de trabalho.
+          </h1>
+
+          <p class="text-base sm:text-lg text-slate-200 leading-relaxed font-light">
+            A <strong>Revista Vitrine Senac</strong> divulga produções técnico-científicas, relatos de experiência prática e pesquisas inovadoras de alunos, professores e profissionais de Sinop e Mato Grosso.
+          </p>
+
+          <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-2">
+            <button onclick="switchTab('submissoes')" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#F28C28] hover:bg-[#d9771a] text-white font-bold text-sm shadow-lg shadow-[#F28C28]/30 transition-all">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Enviar Trabalho pelo Site</span>
+            </button>
+            <a href="https://docs.google.com/document/d/1FPShVDjjgLltMcv0MyIOP7OmCfLIh1RC/copy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/20 transition-all">
+              <i data-lucide="download" class="w-4 h-4 text-[#F28C28]"></i>
+              <span>Baixar Modelo Word Oficial (.docx)</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none transform translate-x-12 translate-y-12">
+          <i data-lucide="book-open" class="w-96 h-96 text-white"></i>
+        </div>
+      </section>
+
+      <!-- CONTADOR REGRESSIVO DE PRAZO -->
+      <section class="bg-gradient-to-r from-[#1F4E79] to-[#153655] rounded-3xl p-6 sm:p-8 text-white card-shadow flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div class="space-y-1 text-center lg:text-left">
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#F28C28]">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            <span>Prazo Final para Submissão</span>
+          </span>
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Até 31 de Outubro de 2026</h2>
+          <p class="text-xs text-slate-300">Garanta a publicação do seu artigo ou relato prático na próxima edição semestral.</p>
+        </div>
+
+        <!-- Timer Blocks -->
+        <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+          <div class="bg-white/10 backdrop-blur-xs rounded-2xl p-3 sm:p-4 min-w-[70px] sm:min-w-[85px] border border-white/10">
+            <span id="countdown-days" class="block text-2xl sm:text-3xl font-extrabold text-[#F28C28] font-mono">00</span>
+            <span class="text-[10px] sm:text-xs text-slate-300 uppercase font-semibold">Dias</span>
+          </div>
+          <div class="bg-white/10 backdrop-blur-xs rounded-2xl p-3 sm:p-4 min-w-[70px] sm:min-w-[85px] border border-white/10">
+            <span id="countdown-hours" class="block text-2xl sm:text-3xl font-extrabold text-white font-mono">00</span>
+            <span class="text-[10px] sm:text-xs text-slate-300 uppercase font-semibold">Horas</span>
+          </div>
+          <div class="bg-white/10 backdrop-blur-xs rounded-2xl p-3 sm:p-4 min-w-[70px] sm:min-w-[85px] border border-white/10">
+            <span id="countdown-minutes" class="block text-2xl sm:text-3xl font-extrabold text-white font-mono">00</span>
+            <span class="text-[10px] sm:text-xs text-slate-300 uppercase font-semibold">Min</span>
+          </div>
+          <div class="bg-white/10 backdrop-blur-xs rounded-2xl p-3 sm:p-4 min-w-[70px] sm:min-w-[85px] border border-white/10">
+            <span id="countdown-seconds" class="block text-2xl sm:text-3xl font-extrabold text-[#F28C28] font-mono">00</span>
+            <span class="text-[10px] sm:text-xs text-slate-300 uppercase font-semibold">Seg</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIFERENCIAIS DA REVISTA -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 card-shadow card-hover space-y-3">
+          <div class="w-11 h-11 rounded-xl bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center">
+            <i data-lucide="target" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Foco Técnico-Aplicado</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Priorizamos pesquisas e soluções aplicáveis a empresas, comércio e serviços de Sinop e do Brasil.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 card-shadow card-hover space-y-3">
+          <div class="w-11 h-11 rounded-xl bg-[#F28C28]/10 text-[#F28C28] flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Avaliação Cega por Pares</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Revisão criteriosa em sistema duplo-cego (Double-Blind Peer Review) assegurando rigor acadêmico.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 card-shadow card-hover space-y-3">
+          <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">100% Gratuito & Aberto</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Sem cobrança de taxa de submissão nem de publicação (Diamond Open Access). Acesso irrestrito.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 card-shadow card-hover space-y-3">
+          <div class="w-11 h-11 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
+            <i data-lucide="award" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Certificado & Currículo</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Validade acadêmica para enriquecer currículos Lattes de alunos e docentes com publicação com ISSN.</p>
+        </div>
+      </section>
+
+      <!-- EDIÇÃO EM DESTAQUE -->
+      <section class="bg-white rounded-3xl p-8 border border-slate-200/80 card-shadow space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#F28C28]">Publicação Recente</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 font-serif">Edição Atual — Vol. 1, N. 1 (2026)</h2>
+            <p class="text-xs text-slate-500 mt-1">ISSN 2965-8845 · Publicado em Junho de 2026 · Semestral</p>
+          </div>
+          <button onclick="switchTab('edicoes')" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1F4E79] hover:text-[#153655] self-start sm:self-auto">
+            <span>Ver Todos os Artigos</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/70 hover:border-[#1F4E79]/40 transition-all space-y-3">
+            <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-100 text-[#1F4E79]">Artigo Científico</span>
+            <h4 class="text-sm font-bold text-slate-900">Transformação Digital no Comércio Varejista do Norte de Mato Grosso: Desafios e Oportunidades</h4>
+            <p class="text-xs text-slate-500">Autores: Lucas Mendes da Silva; Dra. Mariana Alencar</p>
+            <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs">
+              <span class="text-slate-400 font-mono text-[11px]">DOI: 10.5281/zenodo.senac.001</span>
+              <a href="https://docs.google.com/document/d/1FPShVDjjgLltMcv0MyIOP7OmCfLIh1RC/copy" target="_blank" class="text-[#F28C28] font-bold hover:underline flex items-center gap-1">
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Baixar PDF
+              </a>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/70 hover:border-[#1F4E79]/40 transition-all space-y-3">
+            <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-100 text-amber-800">Relato de Experiência</span>
+            <h4 class="text-sm font-bold text-slate-900">Gestão Ágil de Estoques em Empresas de Médio Porte: Implementação Prática com Métodos Visuais</h4>
+            <p class="text-xs text-slate-500">Autores: Camila Rocha; Prof. Daniel Ferreira Junior</p>
+            <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs">
+              <span class="text-slate-400 font-mono text-[11px]">DOI: 10.5281/zenodo.senac.002</span>
+              <a href="https://docs.google.com/document/d/1FPShVDjjgLltMcv0MyIOP7OmCfLIh1RC/copy" target="_blank" class="text-[#F28C28] font-bold hover:underline flex items-center gap-1">
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Baixar PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABA 2: SOBRE A REVISTA -->
+    <div id="tab-sobre" class="tab-content max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div class="space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#F28C28]">Institucional & Editorial</span>
+        <h1 class="text-3xl font-extrabold text-slate-900 font-serif">Sobre a Revista Vitrine Senac</h1>
+        <p class="text-sm text-slate-600">Conheça o foco, a política editorial e os compromissos éticos do periódico.</p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl border border-slate-200/80 card-shadow space-y-6 text-sm text-slate-700 leading-relaxed">
+        <h3 class="text-lg font-bold text-[#1F4E79] flex items-center gap-2">
+          <i data-lucide="target" class="w-5 h-5 text-[#F28C28]"></i>
+          Foco & Escopo
+        </h3>
+        <p>
+          A <strong>Revista Vitrine Senac — Inovação, Gestão & Prática Profissional</strong> é um periódico semestral mantido pelo Senac Mato Grosso — Unidade Sinop. Nosso objetivo é incentivar a pesquisa aplicada, a reflexão crítica e a disseminação de soluções práticas desenvolvidas no ambiente de educação profissional e superior.
+        </p>
+
+        <h3 class="text-lg font-bold text-[#1F4E79] flex items-center gap-2 pt-4 border-t border-slate-100">
+          <i data-lucide="scale" class="w-5 h-5 text-[#F28C28]"></i>
+          Processo de Avaliação por Pares (Double-Blind)
+        </h3>
+        <p>
+          Todos os manuscritos são avaliados preliminarmente pelo Comitê Editorial para verificação de adequação ao escopo e normas ABNT. Em seguida, são encaminhados a pareceristas ad hoc sem identificação de autoria (avaliação cega mútua), garantindo isenção e rigor técnico.
+        </p>
+
+        <h3 class="text-lg font-bold text-[#1F4E79] flex items-center gap-2 pt-4 border-t border-slate-100">
+          <i data-lucide="unlock" class="w-5 h-5 text-[#F28C28]"></i>
+          Acesso Aberto (Open Access)
+        </h3>
+        <p>
+          A Revista Vitrine segue o princípio do <em>Diamond Open Access</em>: não há cobrança de taxas de submissão nem de publicação (sem APCs), sob a licença <strong>Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)</strong>.
+        </p>
+      </div>
+    </div>
+
+    <!-- ABA 3: EDIÇÕES -->
+    <div id="tab-edicoes" class="tab-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div class="space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#F28C28]">Acervo Completo</span>
+        <h1 class="text-3xl font-extrabold text-slate-900 font-serif">Edições & Artigos Publicados</h1>
+      </div>
+
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 card-shadow space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-[#1F4E79]">Volume 1, Número 1 (2026/1)</h2>
+            <p class="text-xs text-slate-500">Tema: Inovação e Gestão no Varejo do Norte de Mato Grosso</p>
+          </div>
+          <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">Publicado</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-100 text-[#1F4E79]">Artigo Técnico-Científico</span>
+            <h3 class="text-base font-bold text-slate-900">Transformação Digital no Comércio Varejista do Norte de Mato Grosso</h3>
+            <p class="text-xs text-slate-600">Autores: Lucas Mendes da Silva; Dra. Mariana Alencar</p>
+            <div class="pt-2 flex items-center justify-between">
+              <span class="text-xs text-slate-400 font-mono">DOI: 10.5281/zenodo.senac.001</span>
+              <a href="https://docs.google.com/document/d/1FPShVDjjgLltMcv0MyIOP7OmCfLIh1RC/copy" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1F4E79] text-white text-xs font-semibold hover:bg-[#153655]">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> Download PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 4: SUBMISSÕES -->
+    <div id="tab-submissoes" class="tab-content max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+      <div class="bg-gradient-to-r from-[#1F4E79] to-[#153655] rounded-3xl p-8 text-white card-shadow space-y-4">
+        <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#F28C28]">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          Portal de Submissões Online
+        </span>
+        <h1 class="text-3xl font-extrabold font-serif">Submissão de Manuscritos</h1>
+        <p class="text-sm text-slate-200 leading-relaxed max-w-3xl">
+          Envie seu trabalho diretamente pelo site. O arquivo é registrado e direcionado para a pasta oficial do Google Drive da Revista Vitrine Senac, gerando comprovante de protocolo imediato.
+        </p>
+        <div class="pt-2">
+          <a href="https://docs.google.com/document/d/1FPShVDjjgLltMcv0MyIOP7OmCfLIh1RC/copy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs border border-white/20 transition-all">
+            <i data-lucide="download" class="w-4 h-4 text-[#F28C28]"></i>
+            <span>Baixar Modelo Formatado Word (.docx)</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- FORMULÁRIO -->
+      <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 card-shadow space-y-8">
+        <form id="submission-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Título do Trabalho *</label>
+            <input type="text" id="sub-titulo" required placeholder="Ex: Gestão de Inovação no Varejo Regional" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79]" />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Seção da Revista *</label>
+              <select id="sub-secao" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79] bg-white">
+                <option value="Artigo Técnico-Científico">Artigo Técnico-Científico (6 a 15 páginas)</option>
+                <option value="Relato de Experiência Prática">Relato de Experiência Prática (4 a 8 páginas)</option>
+                <option value="Estudo de Caso Aplicado">Estudo de Caso Aplicado (5 a 10 páginas)</option>
+              </select>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Área Temática *</label>
+              <select id="sub-area" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79] bg-white">
+                <option value="Gestão & Negócios">Gestão & Negócios</option>
+                <option value="Tecnologia da Informação">Tecnologia da Informação</option>
+                <option value="Comércio & Logística">Comércio & Logística</option>
+                <option value="Saúde & Bem-Estar">Saúde & Bem-Estar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Nome do Autor *</label>
+              <input type="text" id="sub-autor" required placeholder="Seu nome completo" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79]" />
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">E-mail *</label>
+              <input type="email" id="sub-email" required placeholder="seu.email@exemplo.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79]" />
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Telefone / WhatsApp *</label>
+              <input type="tel" id="sub-telefone" required placeholder="(66) 99999-0000" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79]" />
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Resumo do Trabalho *</label>
+            <textarea id="sub-resumo" rows="4" required placeholder="Apresente objetivo, metodologia e resultados..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79]"></textarea>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Arquivo do Manuscrito (.docx ou .pdf) *</label>
+              <a href="https://docs.google.com/document/d/1FPShVDjjgLltMcv0MyIOP7OmCfLIh1RC/copy" target="_blank" class="text-xs text-[#1F4E79] hover:underline font-semibold flex items-center gap-1">
+                <i data-lucide="download" class="w-3.5 h-3.5 text-[#F28C28]"></i> Baixar Modelo Word
+              </a>
+            </div>
+            <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center cursor-pointer bg-slate-50">
+              <input type="file" id="sub-file" accept=".docx,.doc,.pdf" class="hidden" onchange="handleFileChange(event)" />
+              <label for="sub-file" class="cursor-pointer space-y-2 flex flex-col items-center">
+                <i data-lucide="upload-cloud" class="w-8 h-8 text-[#1F4E79]"></i>
+                <span id="file-name-display" class="text-xs font-bold text-slate-700 block">Clique aqui para selecionar seu arquivo Word (.docx)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-2">
+            <button type="submit" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#F28C28] hover:bg-[#d9771a] text-white font-bold text-sm shadow-md transition-all">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Concluir e Enviar Submissão</span>
+            </button>
+          </div>
+        </form>
+
+        <div id="submission-success" class="hidden p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-3">
+          <div class="flex items-center gap-2 font-bold text-base text-emerald-800">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600"></i>
+            <span>Submissão Realizada com Sucesso!</span>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-emerald-200 font-mono text-xs flex items-center justify-between">
+            <span>Protocolo: <strong id="success-protocol" class="text-[#1F4E79]">VT-2026-0000</strong></span>
+            <span class="text-emerald-700 font-bold">Status: Recebido</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 5: EQUIPE EDITORIAL -->
+    <div id="tab-equipe" class="tab-content max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div class="space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#F28C28]">Corpo Editorial</span>
+        <h1 class="text-3xl font-extrabold text-slate-900 font-serif">Equipe Editorial & Pareceristas</h1>
+      </div>
+
+      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 card-shadow flex flex-col sm:flex-row gap-6 items-start">
+        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#1F4E79] to-[#153655] text-white flex items-center justify-center font-bold text-2xl shrink-0 shadow-md">
+          DF
+        </div>
+        <div class="space-y-2.5 flex-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-[#F28C28]/15 text-[#F28C28] text-xs font-extrabold uppercase">Editor-Chefe</span>
+            <span class="text-xs text-slate-500">Senac Mato Grosso — Unidade Sinop</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">Prof. Daniel Ferreira Junior</h2>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Professor, consultor em gestão de negócios e especialista em empreendedorismo. Atua como docente no Senac Sinop, liderando iniciativas de conexão entre a formação técnica e o mercado de trabalho de Mato Grosso.
+          </p>
+          <div class="flex items-center gap-3 pt-2 text-xs">
+            <a href="mailto:daniel.junior@mt.senac.br" class="inline-flex items-center gap-1.5 text-[#1F4E79] font-bold hover:underline">
+              <i data-lucide="mail" class="w-3.5 h-3.5 text-[#F28C28]"></i>
+              <span>daniel.junior@mt.senac.br</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 6: CONTATO -->
+    <div id="tab-contato" class="tab-content max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div class="space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#F28C28]">Fale Conosco</span>
+        <h1 class="text-3xl font-extrabold text-slate-900 font-serif">Canais de Atendimento & Redação</h1>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 card-shadow space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center">
+            <i data-lucide="mail" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-slate-900">E-mail Institucional</h3>
+          <p class="text-xs text-slate-500">Contato direto com a redação:</p>
+          <a href="mailto:daniel.junior@mt.senac.br" class="text-xs font-bold text-[#1F4E79] hover:underline block break-all">
+            daniel.junior@mt.senac.br
+          </a>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 card-shadow space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-[#F28C28]/10 text-[#F28C28] flex items-center justify-center">
+            <i data-lucide="phone" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-slate-900">Telefone & WhatsApp</h3>
+          <p class="text-xs text-slate-500">Secretaria e Coordenação:</p>
+          <p class="text-xs font-bold text-slate-800">(66) 3531-1555</p>
+          <p class="text-xs font-bold text-[#F28C28]">WhatsApp: (66) 99655-2244</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 card-shadow space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <i data-lucide="map-pin" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-slate-900">Unidade Física</h3>
+          <p class="text-xs text-slate-500">Senac Mato Grosso — Unidade Sinop</p>
+          <p class="text-xs text-slate-800 leading-relaxed">Av. das Acácias, 280, Jardim Botânico<br />Sinop - MT</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 7: ÁREA RESTRITA -->
+    <div id="tab-area-restrita" class="tab-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div id="admin-login-card" class="max-w-md mx-auto bg-white p-8 rounded-3xl border border-slate-200/80 card-shadow space-y-6">
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 rounded-2xl bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center mx-auto">
+            <i data-lucide="lock" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">Acesso Restrito — Comitê Editorial</h2>
+          <p class="text-xs text-slate-500">Informe suas credenciais para gerenciar os manuscritos.</p>
+        </div>
+
+        <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Matrícula</label>
+            <input type="text" id="admin-login-user" required placeholder="Digite sua matrícula" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79]" />
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Senha</label>
+            <input type="password" id="admin-login-pass" required placeholder="Digite sua senha" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1F4E79]" />
+          </div>
+
+          <p id="admin-login-error" class="hidden text-xs text-red-600 font-semibold"></p>
+
+          <button type="submit" class="w-full py-3 rounded-xl bg-[#1F4E79] hover:bg-[#153655] text-white font-bold text-xs shadow-md transition-all">
+            Entrar no Painel
+          </button>
+        </form>
+      </div>
+
+      <div id="admin-dashboard-view" class="hidden space-y-8">
+        <div class="bg-gradient-to-r from-[#1F4E79] to-[#153655] rounded-3xl p-6 sm:p-8 text-white card-shadow flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#F28C28] text-xs font-bold uppercase border border-white/15">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              Sessão Autenticada · Comitê Editorial
+            </span>
+            <h1 class="text-2xl font-bold">Gestão de Submissões & Manuscritos</h1>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="handleAdminLogout()" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-600/80 hover:bg-red-600 text-white font-bold text-xs transition-colors">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+              <span>Sair</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 card-shadow flex items-center justify-between">
+            <div>
+              <span class="text-xs text-slate-400 font-bold uppercase">Total de Submissões</span>
+              <span id="stat-total" class="text-3xl font-extrabold text-[#1F4E79] block mt-1">2</span>
+            </div>
+            <i data-lucide="file-text" class="w-8 h-8 text-[#1F4E79]/20"></i>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 card-shadow flex items-center justify-between">
+            <div>
+              <span class="text-xs text-slate-400 font-bold uppercase">Em Avaliação</span>
+              <span id="stat-avaliacao" class="text-3xl font-extrabold text-amber-700 block mt-1">1</span>
+            </div>
+            <i data-lucide="clock" class="w-8 h-8 text-amber-600/20"></i>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 card-shadow flex items-center justify-between">
+            <div>
+              <span class="text-xs text-slate-400 font-bold uppercase">Aprovados</span>
+              <span id="stat-aprovados" class="text-3xl font-extrabold text-emerald-700 block mt-1">1</span>
+            </div>
+            <i data-lucide="check-circle-2" class="w-8 h-8 text-emerald-600/20"></i>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200/80 card-shadow overflow-hidden">
+          <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900">Manuscritos Registrados</h3>
+            <button onclick="exportToCSV()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Exportar CSV
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-600 uppercase font-semibold">
+                <tr>
+                  <th class="p-4">Protocolo</th>
+                  <th class="p-4">Título do Manuscrito</th>
+                  <th class="p-4">Autor</th>
+                  <th class="p-4">Seção</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4 text-right">Ação</th>
+                </tr>
+              </thead>
+              <tbody id="admin-submissions-tbody" class="divide-y divide-slate-100 text-slate-700">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- RODAPÉ INSTITUCIONAL -->
+  <footer class="bg-[#153655] text-white border-t border-white/10 mt-16 pt-12 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="space-y-3 md:col-span-2">
+          <span class="text-xl font-bold font-serif text-[#F28C28]">REVISTA VITRINE SENAC</span>
+          <p class="text-xs text-slate-300 leading-relaxed max-w-md">
+            Periódico acadêmico e técnico-científico do Senac Mato Grosso — Unidade Sinop. Focado em inovação, gestão e práticas do mundo do trabalho.
+          </p>
+          <div class="text-xs text-slate-400 font-mono pt-1">
+            ISSN: 2965-8845 · Periodicidade Semestral
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-[#F28C28]">Navegação Rápida</h4>
+          <ul class="space-y-1.5 text-xs text-slate-300">
+            <li><button onclick="switchTab('inicio')" class="hover:text-white">Página Inicial</button></li>
+            <li><button onclick="switchTab('sobre')" class="hover:text-white">Sobre a Revista</button></li>
+            <li><button onclick="switchTab('edicoes')" class="hover:text-white">Edições Publicadas</button></li>
+            <li><button onclick="switchTab('submissoes')" class="hover:text-white">Submeter Artigo</button></li>
+            <li><button onclick="switchTab('equipe')" class="hover:text-white">Equipe Editorial</button></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-[#F28C28]">Contato da Redação</h4>
+          <p class="text-xs text-slate-300">E-mail oficial:<br /><a href="mailto:daniel.junior@mt.senac.br" class="text-[#F28C28] font-bold hover:underline">daniel.junior@mt.senac.br</a></p>
+          <p class="text-xs text-slate-300">Telefone: (66) 3531-1555</p>
+          <p class="text-xs text-slate-400">Senac Sinop — Jardim Botânico, Sinop - MT</p>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
+        <p>© 2026 Senac Mato Grosso — Unidade Sinop. Todos os direitos reservados.</p>
+        <p>Licenciado sob <strong class="text-white">CC BY 4.0 Internacional</strong></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT AUTÔNOMO -->
+  <script>
+    lucide.createIcons();
+
+    const DEFAULT_SUBMISSOES = [
+      {
+        protocolo: 'VT-2026-0042',
+        titulo: 'Transformação Digital no Comércio Varejista do Norte de Mato Grosso',
+        autor: 'Lucas Mendes da Silva',
+        email: 'lucas.silva@exemplo.com',
+        secao: 'Artigo Técnico-Científico',
+        status: 'Aprovado',
+        data: '15/05/2026'
+      },
+      {
+        protocolo: 'VT-2026-0043',
+        titulo: 'Gestão Ágil de Estoques em Empresas de Médio Porte',
+        autor: 'Camila Rocha',
+        email: 'camila.rocha@exemplo.com',
+        secao: 'Relato de Experiência Prática',
+        status: 'Em Avaliação',
+        data: '22/05/2026'
+      }
+    ];
+
+    function getSubmissoes() {
+      const stored = localStorage.getItem('vitrine_submissoes_html');
+      if (stored) {
+        try { return JSON.parse(stored); } catch (e) {}
+      }
+      return DEFAULT_SUBMISSOES;
+    }
+
+    function saveSubmissoes(list) {
+      localStorage.setItem('vitrine_submissoes_html', JSON.stringify(list));
+      renderAdminTable();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('tab-' + tabId);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-[#1F4E79]', 'bg-slate-100');
+        btn.classList.add('hover:bg-slate-100', 'hover:text-[#1F4E79]');
+      });
+      const activeNav = document.getElementById('nav-' + tabId);
+      if (activeNav) {
+        activeNav.classList.add('text-[#1F4E79]', 'bg-slate-100');
+      }
+
+      if (tabId === 'area-restrita') {
+        checkAdminSession();
+      }
+    }
+
+    function updateCountdown() {
+      const targetDate = new Date(2026, 9, 31, 23, 59, 59).getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.getElementById('countdown-days').textContent = '00';
+        document.getElementById('countdown-hours').textContent = '00';
+        document.getElementById('countdown-minutes').textContent = '00';
+        document.getElementById('countdown-seconds').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function handleFileChange(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('file-name-display').textContent = 'Arquivo selecionado: ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+      }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const titulo = document.getElementById('sub-titulo').value;
+      const secao = document.getElementById('sub-secao').value;
+      const autor = document.getElementById('sub-autor').value;
+      const email = document.getElementById('sub-email').value;
+
+      const randomNum = Math.floor(1000 + Math.random() * 9000);
+      const protocolo = 'VT-2026-' + randomNum;
+
+      const novaSubmissao = {
+        protocolo: protocolo,
+        titulo: titulo,
+        autor: autor,
+        email: email,
+        secao: secao,
+        status: 'Recebido',
+        data: new Date().toLocaleDateString('pt-BR')
+      };
+
+      const lista = getSubmissoes();
+      lista.unshift(novaSubmissao);
+      saveSubmissoes(lista);
+
+      document.getElementById('success-protocol').textContent = protocolo;
+      document.getElementById('submission-success').classList.remove('hidden');
+      document.getElementById('submission-form').reset();
+      document.getElementById('file-name-display').textContent = 'Clique aqui para selecionar seu arquivo Word (.docx)';
+
+      window.scrollTo({ top: document.getElementById('submission-success').offsetTop - 100, behavior: 'smooth' });
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('admin-login-user').value.trim();
+      const pass = document.getElementById('admin-login-pass').value.trim();
+
+      if (user === '111111' && pass === '0000') {
+        sessionStorage.setItem('vitrine_admin_logged', 'true');
+        checkAdminSession();
+      } else {
+        const err = document.getElementById('admin-login-error');
+        err.textContent = 'Credenciais incorretas. Tente novamente.';
+        err.classList.remove('hidden');
+      }
+    }
+
+    function handleAdminLogout() {
+      sessionStorage.removeItem('vitrine_admin_logged');
+      checkAdminSession();
+    }
+
+    function checkAdminSession() {
+      const isLogged = sessionStorage.getItem('vitrine_admin_logged') === 'true';
+      const loginCard = document.getElementById('admin-login-card');
+      const dashView = document.getElementById('admin-dashboard-view');
+
+      if (isLogged) {
+        loginCard.classList.add('hidden');
+        dashView.classList.remove('hidden');
+        renderAdminTable();
+      } else {
+        loginCard.classList.remove('hidden');
+        dashView.classList.add('hidden');
+      }
+    }
+
+    function renderAdminTable() {
+      const lista = getSubmissoes();
+      const tbody = document.getElementById('admin-submissions-tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      let aprovados = 0;
+      let emAnalise = 0;
+
+      lista.forEach((item, index) => {
+        if (item.status === 'Aprovado') aprovados++;
+        if (item.status === 'Em Avaliação' || item.status === 'Recebido') emAnalise++;
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition-colors';
+        tr.innerHTML = `
+          <td class="p-4 font-mono font-bold text-[#1F4E79]">${item.protocolo}</td>
+          <td class="p-4 font-semibold">${item.titulo}</td>
+          <td class="p-4">${item.autor}<br><span class="text-slate-400 text-[10px]">${item.email}</span></td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700">${item.secao}</span></td>
+          <td class="p-4">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${
+              item.status === 'Aprovado' ? 'bg-emerald-100 text-emerald-800' :
+              item.status === 'Em Avaliação' ? 'bg-amber-100 text-amber-800' :
+              'bg-blue-100 text-[#1F4E79]'
+            }">${item.status}</span>
+          </td>
+          <td class="p-4 text-right">
+            <button onclick="toggleStatus(${index})" class="px-2 py-1 rounded bg-slate-200 hover:bg-slate-300 text-[11px] font-bold">Alterar Status</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('stat-total').textContent = lista.length;
+      document.getElementById('stat-avaliacao').textContent = emAnalise;
+      document.getElementById('stat-aprovados').textContent = aprovados;
+    }
+
+    function toggleStatus(index) {
+      const lista = getSubmissoes();
+      const current = lista[index].status;
+      const next = current === 'Recebido' ? 'Em Avaliação' : current === 'Em Avaliação' ? 'Aprovado' : 'Recebido';
+      lista[index].status = next;
+      saveSubmissoes(lista);
+    }
+
+    function exportToCSV() {
+      const lista = getSubmissoes();
+      let csv = 'Protocolo;Titulo;Autor;Email;Secao;Status;Data\n';
+      lista.forEach(i => {
+        csv += `"${i.protocolo}";"${i.titulo}";"${i.autor}";"${i.email}";"${i.secao}";"${i.status}";"${i.data}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'submissoes_vitrine_senac.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
